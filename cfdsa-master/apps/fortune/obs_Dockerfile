@@ -1,0 +1,34 @@
+FROM node:latest    # check in local first. if missing, pull from docker repo
+
+#--------------------------------------
+# BUILD docker image
+#--------------------------------------
+# Environ var
+ENV APP_ROOT=/app APP_PORT=3000
+
+# create APP_ROOT and cd in
+WORKDIR ${APP_ROOT}
+
+# copy the files and dir into image
+ADD main.js .
+ADD package.json .
+ADD package-lock.json .
+
+ADD public public
+ADD views views
+
+# install the dependencies
+RUN npm install    # install dependencies specified from package.json
+
+
+#--------------------------------------
+# RUN docker image
+#--------------------------------------
+EXPOSE ${APP_PORT}
+
+# Actual command: node main.js $APP_PORT
+# command that is run
+ENTRYPOINT["node", "main.js"]
+
+# parameters behind the ENTRYPOINT
+CMD [ "${APP_PORT}"]

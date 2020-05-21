@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortune-deploy
+  labels:
+    dept: engineering
+    app: fortune
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fortune-pod 
+  template:
+    # pod yaml
+    metadata: 
+      name: fortune-pod
+      labels:
+        dept: engineering
+        app: fortune-pod
+    spec:
+      containers:
+      - name: fortune-container
+        image: happybits/fortune:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: http-port
+            containerPort: 5000   # exposing pod's port
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: fortune-svc
+   labels:
+      app: fortune
+
+spec:
+   type: ClusterIP
+   selector:
+      app: fortune-pod
+   ports:
+   - name: for-port
+     port: 8080
+     targetPort: http-port
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+   name: fortune-ing
+   labels:
+      app: fortune
+
+spec:
+   rules:
+   - host: "fortune.104.248.99.25.nip.io"
+     http:
+        paths:
+        - path: /
+          backend:
+            serviceName: fortune-svc
+            servicePort: for-port
+

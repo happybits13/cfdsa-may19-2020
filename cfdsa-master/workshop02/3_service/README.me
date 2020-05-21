@@ -1,0 +1,7 @@
+Set up nwdb. Then set up nwapp.
+
+Services
+-------------
+1) ClusterIP --- Assigns a static IP to the service in cluster. Pods are ephemeral, hence pods IP are bound to change. Hence, better practice to point to service(with 1 IP) and route to the pods by port.
+2) NodePort
+3) LoadBalancer --- Loadbalances to pod. Also has a ClusterIP, and external IP may be generated.

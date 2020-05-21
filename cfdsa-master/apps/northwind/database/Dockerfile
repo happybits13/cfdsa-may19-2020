@@ -10,3 +10,6 @@ ADD 1-northwind-data.sql /docker-entrypoint-initdb.d
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 	CMD mysqladmin ping -uroot -pchangeit || exit 1
 
+# where mysql stores the database
+VOLUME /var/lib/mysql
+

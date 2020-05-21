@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nwdb-pvc
+  labels:
+    app: northwind
+spec:
+  accessModes:
+  - ReadWriteOnce # there are also ReadOnlyMany ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi  # 1 gB
+  storageClassName: do-block-storage # get from kubectl get sc
+

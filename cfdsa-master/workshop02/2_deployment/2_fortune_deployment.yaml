@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: myns
+  labels:
+    dept: engineering
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortune-deploy
+  namespace: myns
+  labels:
+    dept: engineering
+    app: fortune
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fortune-pod 
+  template:
+    # pod yaml
+    metadata: 
+      name: fortune-pod
+      labels:
+        dept: engineering
+        app: fortune-pod
+    spec:
+      containers:
+      - name: fortune-container
+        image: happybits/fortune:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: http-port
+            containerPort: 5000   # exposing pod's port

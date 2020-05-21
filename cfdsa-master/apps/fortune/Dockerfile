@@ -10,9 +10,10 @@ ADD public public
 ADD views views
 # install the dependencies
 RUN npm install
-# tell what port we are using
+# Healthcheck. send daemon runs CMD using docker exec every interval
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 	CMD curl -s -f http://localhost:${APP_PORT}/health || exit 1
+# tell what port we are using
 EXPOSE ${APP_PORT}
 ENTRYPOINT [ "node", "main.js" ]
 #CMD [ "${APP_PORT}" ]

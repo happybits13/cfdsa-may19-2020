@@ -1,0 +1,21 @@
+In this example, nginx-ingress is deployed with helm (package manager)
+
+Useful commands
+--------------------------------------------------------------------
+helm repo add stable https://kubernetes-charts.storage.googleapis.com    // add this repo to install nginx-ingress
+helm install stable/nginx-ingress --generate-name --version 1.37.0 -n nginx-ingress      // installs nginx-ingress using helm package manager
+helm delete nginx-ingress -n nginx-ingress                        // deletes nginx-ingress?
+kubectl get all -n nginx-ingress
+
+Deploying nginx-ingress
+------------------------------------
+helm install stable/nginx-ingress --generate-name --version 1.37.0 -n nginx-ingress             
+add ingress kind in *.yaml  (Seems like nginx-ingress partitions the different ingresses and treat them individually)
+
+Best practices
+-------------------------------------
+Seperate ingress from the app file (store ingress in another file)
+
+
+Ingress resolve domain names and forward traffic to service(identified by svc names) and their ports.
+
