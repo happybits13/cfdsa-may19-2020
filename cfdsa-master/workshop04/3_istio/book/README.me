@@ -1,0 +1,16 @@
+Setting up a bookinfo app with istioctl
+-------------------------------------------------
+istioctl kube-inject -f bookinfo > test.yaml   --- generate fortune-deploy yaml file with sidecar
+kubectl apply -f test.yaml
+kubectl apply -f bookinfo-ing.yaml
+
+//kubectl get svc -n istio-system // get IP of load balancer from ingress here and enter.
+
+
+Viewing grafana/kiali/jaeger stats
+---------------------------------------------------
+kubectl port-forward svc/<svc-name> 8080:<svc-port-entry> -n istio-system   //
+
+// while :; do curl http://localhost:8080/productpage?u=normal; sleep 3; done  //send some traffic to the page if you want some statistics
+
+istioctl dash kiali/jaeger/grafana/...   // Or just enter localhost:8080 to enter

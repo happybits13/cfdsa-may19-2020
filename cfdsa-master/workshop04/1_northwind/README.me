@@ -1,0 +1,13 @@
+If not done so
+-----------------------
+helm repo add stable https://kubernetes-charts.storage.googleapis.com    // add this repo to install nginx-ingress
+helm repo update
+
+
+Deploying northwind app
+------------------------------------
+helm install <release-name> stable/nginx-ingress --version 1.37.0 -n nginx-ingress -f values.yaml     // installs nginx-ingress using helm package manager
+kubectl apply -f nwvol.yaml -n nw-ns
+kubectl apply -f nwapp-ing.yaml -n nw-ns
+kubectl apply -f nwdb.yaml -n nw-ns
+kubectl apply -f nwapp.yaml -n nw-ns

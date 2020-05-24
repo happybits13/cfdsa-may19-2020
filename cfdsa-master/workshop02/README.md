@@ -25,9 +25,13 @@ kubectl port-forward <resource-type>/<resource-name> <localhost-port>:<resource-
 
 kubectl api-resources
 kubectl top nodes
+kubectl set image deployment/<deployment-name> <container-name>=<new image name> --- container name from your container section in *.yaml file
 kubectl scale <deployment> <deployment-name> --replicas=<no>             
+kubectl who-can create <resource-type> -n <namespace-name>
 
-
+kubectl rollout <resource-type></resoure-name>        --- if you --record, willl show rollout history
+kubectl rollout undo deployment/<deployment name> --to-revision=<revision-no>   -- undo rollouts and rollback
+kubectl rollout status deployment/<deployment name>
 
 *always set your KUBECONFIG*
 

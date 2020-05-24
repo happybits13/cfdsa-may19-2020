@@ -1,7 +1,15 @@
-In these examples, using the new image for nwapp. Hence, no need define configmap anymore. Config alrdy in image.
+In these examples, using the new image for nwapp to implement:
 
-In this eg, will be implementing:
 1) ingress to direct to multiple host
-2) ingress to direct to multiple path (also using regex to redirect to desired path)
+2) ingress to direct to multiple path (also using regex to redirect to desired path. This is known as Ingress Fan Out)
 
 3) rolling updates
+
+
+
+
+
+Useful info
+-----------------------
+Annotations: additional metadata passed to the controller (in this eg, the controller are the pods created by nginx-ingress(helm))
+

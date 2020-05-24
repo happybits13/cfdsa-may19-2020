@@ -1,10 +1,17 @@
-In this example, nginx-ingress is deployed with helm (package manager)
+In this example, nginx-ingress is deployed with helm (package manager that manages charts)
+- nginx-ingress will be used to map domain name(nwapp and fortuneapp) to their services' names & port.
 
 Useful commands
 --------------------------------------------------------------------
 helm repo add stable https://kubernetes-charts.storage.googleapis.com    // add this repo to install nginx-ingress
-helm install stable/nginx-ingress --generate-name --version 1.37.0 -n nginx-ingress      // installs nginx-ingress using helm package manager
+helm repo update
+helm install <release-name> stable/nginx-ingress --version 1.37.0 -n nginx-ingress      // installs nginx-ingress using helm package manager
+helm install <release-name> stable/nginx-ingress --version 1.37.0 -n nginx-ingress -f values.yaml
+helm template                             --- views template yaml file of chart
+
+helm uninstall <release-name> -n <namespace-name>            --- uninstalls nginx-ingress 
 helm delete nginx-ingress -n nginx-ingress                        // deletes nginx-ingress?
+helm ls -A                      --- list all helm across all namespace
 kubectl get all -n nginx-ingress
 
 Deploying nginx-ingress

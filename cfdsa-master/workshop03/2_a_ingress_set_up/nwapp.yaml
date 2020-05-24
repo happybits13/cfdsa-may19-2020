@@ -92,7 +92,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx" # ingress name
 spec:
   rules:
-  - host: "nwapp.104.248.99.25.nip.io" # ip is from load balancer in nginx. in reality, the load banacer will have a domain name. nip.io is to fake a domain name. this field only accepts domain name.
+  - host: "nwapp.157.230.193.185.nip.io" # ip is from load balancer in nginx. in reality, the load banacer will have a domain name. nip.io is to fake a domain name. this field only accepts domain name.
     http:
       paths:
       - path: /    # can consider 1 path per pod

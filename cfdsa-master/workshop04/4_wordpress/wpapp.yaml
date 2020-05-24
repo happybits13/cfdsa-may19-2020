@@ -1,0 +1,99 @@
+--- 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+   name: wpapp-cm 
+   labels:
+      app: wordpress
+
+data:
+   DB_USER: root
+   DB_HOST: wpdb-mysql.wpapp.svc.cluster.local
+   DB_NAME: db
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pvc
+  namespace: wpapp
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: do-block-storage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: wpapp-deploy
+   labels:
+      app: wordpress
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         app: wpapp-pod
+   template:
+      metadata:
+         name: wpapp-pod 
+         labels:
+            app: wpapp-pod
+      spec:
+         volumes:
+         - name: wp-vol
+           persistentVolumeClaim:
+              claimName: wp-pvc
+         containers:
+         - name: wpapp-container
+           image: wordpress:latest
+           imagePullPolicy: IfNotPresent
+           env:
+           - name: WORDPRESS_DB_USER
+             valueFrom:
+                configMapKeyRef:
+                   name: wpapp-cm 
+                   key: DB_USER
+           - name: WORDPRESS_DB_HOST
+             valueFrom:
+                configMapKeyRef:
+                   name: wpapp-cm 
+                   key: DB_HOST
+           - name: WORDPRESS_DB_NAME
+             valueFrom:
+                configMapKeyRef:
+                   name: wpapp-cm
+                   key: DB_NAME
+           - name: WORDPRESS_DB_PASSWORD 
+             valueFrom:
+                secretKeyRef:
+                   name: wpdb-cluster-secret
+                   key: ROOT_PASSWORD
+
+           
+           ports:
+           - name: wpapp-port
+             containerPort: 80
+           volumeMounts:
+           - name: wp-vol
+             mountPath: /var/www/html
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: wpapp-svc
+   labels:
+      app: wordpress
+
+spec:
+   type: ClusterIP
+   selector:
+      app: wpapp-pod
+   ports:
+   - name: app-port
+     port: 80
+     targetPort: wpapp-port
+

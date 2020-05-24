@@ -5,8 +5,10 @@ metadata:
    name: nwdb-secret
    labels:
       app: northwind
+
 data:
    MYSQL_ROOT_PASSWORD: Y2hhbmdlaXQ= 
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -14,6 +16,7 @@ metadata:
    name: nwdb-deploy
    labels:
       app: northwind
+
 spec:
    replicas: 1
    selector:
@@ -29,6 +32,7 @@ spec:
          - name: mysql-vol
            persistentVolumeClaim:
               claimName: nwdb-pvc
+
          initContainers:
          - name: scrub
            volumeMounts:
@@ -40,6 +44,7 @@ spec:
            - /bin/sh
            - -c
            - "test -e /scrub && rm -rf /scrub/..?* /scrub/.[!.]* /scrub/*  && test -z \"$(ls -A /scrub)\" || exit 1"
+
          containers:
          - name: northwind-container
            image: happybits/nwdb:v3
@@ -53,7 +58,7 @@ spec:
            ports:
            - name: mysql-port
              containerPort: 3306
-           
+
            volumeMounts:
            - name: mysql-vol
              mountPath: /var/lib/mysql
@@ -68,6 +73,7 @@ spec:
                  - bash
                  - -c
                  - "mysqladmin ping -uroot -p${MYSQL_ROOT_PASSWORD} || exit 1"
+
 ---
 apiVersion: v1
 kind: Service
@@ -75,6 +81,7 @@ metadata:
    name: nwdb-svc
    labels:
       app: northwind
+
 spec:
    type: ClusterIP
    selector:
@@ -84,3 +91,4 @@ spec:
    - name: db-port
      port: 3306
      targetPort: mysql-port
+
