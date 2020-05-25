@@ -92,7 +92,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx" # ingress name
 spec:
   rules:
-  - host: "nwapp.167.172.6.100.nip.io" #ip is from nginx ingress load balancer. this needs to be a hostname. hence use nip.io to fake one
+  - host: "nwapp.157.230.193.185.nip.io" #ip is from nginx ingress load balancer. this needs to be a hostname. hence use nip.io to fake one
     http:
       paths:
       - path: /

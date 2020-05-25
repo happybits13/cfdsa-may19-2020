@@ -10,7 +10,7 @@ metadata:
 
 spec:
    rules:
-   - host: "wpapp.157.230.193.185.nip.io"
+   - host: "wpapp.167.172.6.213.nip.io"
      http:
         paths:
         - path: /

@@ -1,4 +1,6 @@
-1) Create PersistentVolumeClaim (pvc)
-2) Create VolumeMount, tag to pvc
-3) Clense newly created VolumeMount
-4) tag VolumeMount to the file to be mounted. In this eg, its mysql
+Mounting file to volume
+--------------------------------------
+1) Create PersistentVolumeClaim (pvc).
+2) Create Volume in Pod(mysql-vol), tag to pvc. 
+3) [Optional] Clense newly created Volume (New volume pre-configuration loads in some data you might not want)
+4) Create VolumeMount in container. Map VolumeMount with volume and desired file to mounted. In this eg, /var/lib/mysql to mysql-vol

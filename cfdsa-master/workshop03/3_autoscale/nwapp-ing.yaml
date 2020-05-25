@@ -12,18 +12,18 @@ metadata:
 
 spec:
    rules:
-   - host: "v1.nwapp.167.172.4.82.nip.io"
+   - host: "v1.nwapp.157.230.193.185.nip.io"
      http:
         paths:
         - path: /
           backend:
              serviceName: nwapp-svc
              servicePort: 8080
-   - host: "v2.nwapp.167.172.4.82.nip.io"
+   - host: "v2.nwapp.157.230.193.185.nip.io"
      http:
         paths:
         - path: /
           backend:
-             serviceName: nwappv2-svc
+             serviceName: nwapp-svc
              servicePort: 8080
 

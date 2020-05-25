@@ -27,24 +27,6 @@ spec:
       labels:
         app: northwind-pod
     spec:
-      volumes:
-      - name: mysql-vol
-        persistentVolumeClaim:
-          claimName: nwdb-pvc   # must be same as your persistentVol name
-      
-      # only for digital ocean. to clear some unwanted data
-      initContainers:
-      - name: scrub
-        volumeMounts:
-          - name: mysql-vol
-            mountPath: /scrub
-          image: busybox
-          command:
-            - /bin/sh
-            - -c
-            - "test -e /scrub && rm -rf /scrub/..?* /scrub/.[!.]* /scrub/*  && test -z \"$(ls -A /scrub)\" || exit 1"
-          imagePullPolicy: IfNotPresent
-
       containers:
       - name: nwdb-container
         image: happybits/nwdb:v3
@@ -70,10 +52,6 @@ spec:
         ports:
         - name: mysql-port
           containerPort: 3306
-
-        volumeMounts:
-        - name: mysql-vol
-          mountPath: /var/lib/mysql
 ---
 apiVersion: v1
 kind: Service
@@ -88,5 +66,5 @@ spec:
 
   ports:
   - name: db-port
-    port: 3306       # ingress port
+    port: 3306       # service entry port
     targetPort: 3306 # can just put mysql-port also. port defined above

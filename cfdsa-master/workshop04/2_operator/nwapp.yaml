@@ -8,7 +8,7 @@ metadata:
 
 data:
    DB_USER: root
-   DB_HOST: nwdb-svc.nw-ns.svc.cluster.local
+   DB_HOST: nwdb-mysql.nw-ns.svc.cluster.local
 
 ---
 apiVersion: apps/v1
@@ -55,8 +55,8 @@ spec:
            - name: DB_PASSWORD 
              valueFrom:
                 secretKeyRef:
-                   name: nwdb-secret
-                   key: MYSQL_ROOT_PASSWORD
+                   name: nwdb-cluster-secret
+                   key: ROOT_PASSWORD
            - name: INSTANCE_IP_ADDRESS 
              valueFrom:
                 fieldRef:

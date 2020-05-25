@@ -1,13 +1,31 @@
+In this eg, will be deploying northwind app with configuration values set in nginx controller.
+(this is different from annotation(metadata passed to controller and set))
+
+
 If not done so
 -----------------------
 helm repo add stable https://kubernetes-charts.storage.googleapis.com    // add this repo to install nginx-ingress
 helm repo update
 
 
-Deploying northwind app
+Deploy northwind app (command)
 ------------------------------------
 helm install <release-name> stable/nginx-ingress --version 1.37.0 -n nginx-ingress -f values.yaml     // installs nginx-ingress using helm package manager
 kubectl apply -f nwvol.yaml -n nw-ns
 kubectl apply -f nwapp-ing.yaml -n nw-ns
 kubectl apply -f nwdb.yaml -n nw-ns
 kubectl apply -f nwapp.yaml -n nw-ns
+
+
+Deploy/Undeploy northwind app (script)
+----------------------------------------
+script/deploy.sh <apply/delete>
+
+
+
+
+
+
+Undeploying nginx-ingress
+-------------------------------------------
+helm uninstall <release-name> -n <namespace-name>
